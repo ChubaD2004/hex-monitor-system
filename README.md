@@ -13,11 +13,11 @@ The device monitors a 4-bit DIP switch input and displays the hexadecimal value 
 The development is divided into logical stages based on the "Layered Architecture" principle.
 
 ### Stage 1: Infrastructure & UART Debugging
-- [ ] **Step 1.1: Project Setup**
+- [X] **Step 1.1: Project Setup**
     - **Goal:** Initialize repository, folder structure, and version control.
     - **Concepts:** Git Flow, PlatformIO Structure, Modular Design.
 
-- [ ] **Step 1.2: UART Driver Implementation**
+- [X] **Step 1.2: UART Driver Implementation**
     - **Goal:** Create a communication channel for debugging.
     - **Concepts:** Baud Rate calculations (`UBRR0`), Control Registers (`UCSR0B`), Buffer handling.
 
