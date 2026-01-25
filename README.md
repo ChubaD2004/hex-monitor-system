@@ -22,7 +22,7 @@ The development is divided into logical stages based on the "Layered Architectur
     - **Concepts:** Baud Rate calculations (`UBRR0`), Control Registers (`UCSR0B`), Buffer handling.
 
 ### Stage 2: Input Layer (DIP-Switch)
-- [ ] **Step 2.1: GPIO & Masking**
+- [X] **Step 2.1: GPIO & Masking**
     - **Goal:** Read stable data from physical switches.
     - **Concepts:** Input Pull-ups (`PORTx`), Bitwise AND (`&`), Bit shifting (`>>`), Port Registers (`PINx`).
 
