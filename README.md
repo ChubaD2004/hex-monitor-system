@@ -27,7 +27,7 @@ The development is divided into logical stages based on the "Layered Architectur
     - **Concepts:** Input Pull-ups (`PORTx`), Bitwise AND (`&`), Bit shifting (`>>`), Port Registers (`PINx`).
 
 ### Stage 3: Output Layer (7-Segment Display)
-- [ ] **Step 3.1: Static Indication**
+- [X] **Step 3.1: Static Indication**
     - **Goal:** Display hex characters on the screen.
     - **Concepts:** Lookup Tables, Direct Port Manipulation (`DDRx`, `PORTx`), 7-seg encoding.
 

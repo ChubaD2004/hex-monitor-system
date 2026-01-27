@@ -1,12 +1,13 @@
 #include <Arduino.h>
-#include "../include/uart.h"
-
+#include "system.h"
 void setup() {
-  uart_init();
-  uart_print("System Booted...\n");
+  // Initialize the system core
+  system_init(); 
+
 }
 
 void loop() {
-  
-}
+  // Hand over control to our system loop
+  system_loop();     
 
+}
