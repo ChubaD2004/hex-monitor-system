@@ -15,16 +15,25 @@ static const uint8_t SEGMENT_MAP[16] = {
 };
 
 void seg_init(){
-    // Set all pins of PORT D to OUTPUT
-    // Write 0xFF (11111111) to DDRD
-    DDRD = 0xFF; 
+    // Configure PORT D (Pins D2-D7) as Output
+    // We use |= 0xFC (11111100) to set bits 2-7 to HIGH (Output)
+    // while leaving bits 0-1 (UART) unchanged.
+    DDRD |= 0xFF; 
+
+    // Configure PORT B (Pins D8-D9) as Output
+    // We use |= 0x03 (00000011) to set bits 0-1 to HIGH (Output).
+    DDRB |= 0x03; 
+
 }
 
 void seg_display_hex(uint8_t number){
-    // Safety mask: ensure number is between 0-15
-    uint8_t safe_index = number & 0x0F;
+    uint8_t safe_index = number & 0x0F;                     // 1. Safety mask: ensure number is within 0-15 range
 
-    // Write the segment code to the port
-    PORTD = SEGMENT_MAP[safe_index];
+    uint8_t segments  = SEGMENT_MAP[safe_index];            // 2. Get the raw segment code (Bits: DP, G, F, E, D, C, B, A)
+
+
+    PORTD = (PORTD & 0x03) | (segments << 2);               // PORT D OPERATION (Segments A to F) 
+
+    PORTB = (PORTB & 0xFC) | (segments >> 6);               // PORT B OPERATION (Segments G and DP) 
 }
 
