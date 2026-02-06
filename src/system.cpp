@@ -35,20 +35,17 @@ void system_init() {
     OCR1A = 624;                            // Calculated number of Trigger Threshold
 
     TIMSK1 |= (1 << OCIE1A);                // Allowing the system to "interrupt" the main cycle
-    TCCR1B = (1 << WGM12) | (1 << CS12);   // Prescaler - 1:256. Operation in CTC mode
+    TCCR1B = (1 << WGM12) | (1 << CS12);    // Prescaler - 1:256. Operation in CTC mode
 
     sei();                                  // Enable global interrupts
 }
 
 // Main system logic (executed repeatedly)
 void system_loop(){
-    // Check the shared value updated by the timer interrupt
-    if (current_val > 0) {
-        // Send status message to terminal
-        uart_print("Active!\n");
+    if (current_val > 0) {                  // Check the shared value updated by the timer interrupt
+        uart_print("Active!\n");            // Send status message to terminal
 
-        // Prevent UART flooding (poll every 500ms)
-        _delay_ms(500);
+        _delay_ms(500);                     // Prevent UART flooding (poll every 500ms)
     }
     
 
@@ -57,10 +54,21 @@ void system_loop(){
 // Timer1 Compare Match A Interrupt Service Routine
 // This function runs automatically every 10ms
 ISR(TIMER1_COMPA_vect) {
-    // 1. Read the hardware state and update the shared variable
-    current_val = dip_read();
+    static uint8_t active_digit = 0;            // Persistent variable to keep track of which digit to light up
     
-    // 2. Update the 7-segment display immediately
-    seg_display_hex(current_val);
+    current_val = dip_read();                   // Read input (shared with main loop)
+    
+    if (active_digit == 0)
+    {
+        uint8_t tens = current_val / 10;        // Calculate TENS (e.g., 15 / 10 = 1)
+        seg_display_digit(tens, 0);             // Display on the LEFT digit (index 0)
+        active_digit = 1;                       // Switch to the right digit for next time
+    } else if (active_digit == 1) {
+        uint8_t units = current_val % 10;       // Calculate UNITS (e.g., 15 % 10 = 5)
+        seg_display_digit(current_val, 1);      // Display on the RIGHT digit (index 1)
+        active_digit = 0;                       // Switch to the left digit for next time
+    }
+    
+
     
 }
