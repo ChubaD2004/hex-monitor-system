@@ -1,10 +1,56 @@
 # 🛠 HEX-Monitor System
+It reads a 4-bit physical input from a DIP-switch and displays the value in a user-friendly **Decimal format (00-15)** on a dual-digit 7-segment display.
 
-## 🎯 Project Goal
-This project represents a complete embedded system development cycle: from low-level driver implementation to non-blocking system architecture.
-The device monitors a 4-bit DIP switch input and displays the hexadecimal value (0-F) on a 7-segment display using UART for debugging.
+### 🌟 Key Achievements:
+- **Non-blocking Architecture:** System logic is entirely driven by **Timer1 interrupts (100Hz)**, freeing up the CPU for background tasks.
+- **Hardware Multiplexing:** Implemented a manual bus for segment pins to drive two digits using only 9 GPIOs instead of 14-Metal AVR.
 
-**Key Objective:** Transition from simple polling loops to a professional interrupt-based architecture.
+**Status:** ✅ Project Completed (February 2026)
+
+---
+
+## 🧠 Engineering Principles
+During development, the following professional embedded standards were applied:
+
+1. **Layered Architecture:** Clear separation between hardware drivers (`drivers/`) and application logic (`system.cpp`).
+2. **Direct Register Debug Interface:** A custom low-level UART driver provides real-time system status and boot logs without conflicting with the display Manipulation:** Zero reliance on Arduino's `digitalWrite` or `delay`. All I/O is handled via `PORT hardware.
+
+---
+
+## 🌟 Project Overview
+This project is a high-level simulation of a professional embedded system development cycle. It transforms a simple 4-bit DIP-switch input into a stable, non-blocking dual-digit decimal display (00-15) using an ATmega328P microcontroller.
+
+### 🚀 Key Results & Features
+- **Non-blocking Architecture:** System logic runs entirely on Timer1 interrupts.
+- **Conflict Resolution:** Successfully resolved hardware resource contention between the UART (Serial) and the Display by implementing customISR), keeping the CPU free for background tasks.
+- **Hardware Multiplexing:** Implemented a shared 7-segment data bus for two digits bitwise shifting logic.
+- **Modular Driver Design:** Created independent, reusable drivers for GPIO, UART, and , controlled via high-speed switching (100Hz) to utilize the Persistence of Vision (POV) effect.
+- **Decimal Logic:** Real-time mathematical conversion from binary input to human-readable decimal format (Tens/Units).
+- **UART7-Segment displays.
+
+---
+
+## 🏗 Core Engineering Principles
+During development, the following professional practices were implemented:
+1. **Layered Architecturex`, `DDRx`, and `PINx` for maximum speed and minimum binary size.
+3. **Memory:** Clear separation between hardware drivers (`drivers/`) and application logic (`system.cpp`).
+2. **Direct Register Safety:** Use of the `volatile` keyword for shared data between ISR and the main loop to prevent compiler optimization bugs.
+4. **Ghosting Prevention Manipulation:** No high-level Arduino libraries used for core functions. All I/O, Timers, and UART are configured at:** Implemented a "Disable -> Update -> Enable" sequence in the multiplexing logic to ensure a crystal-clear display output the bit level.
+3. **Resource Conflict Resolution:** Successfully resolved a hardware pin conflict between UART (RX/TX) and the display.
+
+---
+
+## 📂 Project Structure
+- `src/` - Main application entry point.
+- `src/system bus through port re-mapping and bit-shifting logic.
+4. **Memory Safety:** Use of `volatile` keyword for.cpp` - System Core (ISR, Task management).
+- `src/drivers/` - Low-level drivers (`uart.cpp`, `dip_switch.cpp`, `segment.cpp`).
+- `include/` - Public header files and shared data between ISR and main loop, and bitmasking for "surgical" port updates.
+
+---
+
+## 🗺 Learning interfaces.
+- `schematic/` - KiCad schematics and hardware datasheets.
 
 ---
 
@@ -32,13 +78,8 @@ The development is divided into logical stages based on the "Layered Architectur
     - **Concepts:** Lookup Tables, Direct Port Manipulation (`DDRx`, `PORTx`), 7-seg encoding.
 
 ### Stage 4: System Core (Interrupts)
-- [ ] **Step 4.1: Non-blocking Architecture**
+- [X] **Step 4.1: Non-blocking Architecture**
     - **Goal:** Run display refresh and input polling in background.
     - **Concepts:** Timer1/Timer0 configuration, ISR (Interrupt Service Routines), Atomic operations.
 
 ---
-## 📂 Project Structure
-- `src/` - Main application logic (`main.cpp`)
-- `src/drivers/` - Low-level hardware drivers (`uart.cpp`, `gpio.cpp`, `display.cpp`)
-- `include/` - Header files (`uart.h`, `config.h`)
-- `docs/` - Schematics, diagrams, and datasheets.
