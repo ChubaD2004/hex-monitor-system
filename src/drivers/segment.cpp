@@ -54,15 +54,3 @@ void seg_display_digit(uint8_t number, uint8_t index) {
     
     
 }
-
-void seg_display_hex(uint8_t number){
-    uint8_t safe_index = number & 0x0F;                     // 1. Safety mask: ensure number is within 0-15 range
-
-    uint8_t segments  = SEGMENT_MAP[safe_index];            // 2. Get the raw segment code (Bits: DP, G, F, E, D, C, B, A)
-
-
-    PORTD = (PORTD & 0x03) | (segments << 2);               // PORT D OPERATION (Segments A to F) 
-
-    PORTB = (PORTB & 0x06) | (segments >> 6);               // PORT B OPERATION (Segments G and DP) 
-}
-

@@ -22,12 +22,7 @@ void system_init() {
     dip_init();                             // Initialize DIP-switch pins as Inputs with Pull-up
     seg_init();                             // Initialization of adjustment of the 7-segment display
 
-    // 2. Initial read BEFORE timer starts
-    // This ensures the display shows the correct value immediately
-    current_val = dip_read();
-    seg_display_hex(current_val);
-
-    // 3. Timer1 setup
+    // 2. Timer1 setup
     TCCR1A = 0;                             // Clear PWM settings
     TCCR1B = 0;                             // Clear Prescaler and Mode settings
     TCNT1  = 0;                             // Initialize counter value to 0
@@ -65,10 +60,7 @@ ISR(TIMER1_COMPA_vect) {
         active_digit = 1;                       // Switch to the right digit for next time
     } else if (active_digit == 1) {
         uint8_t units = current_val % 10;       // Calculate UNITS (e.g., 15 % 10 = 5)
-        seg_display_digit(current_val, 1);      // Display on the RIGHT digit (index 1)
+        seg_display_digit(units, 1);            // Display on the RIGHT digit (index 1)
         active_digit = 0;                       // Switch to the left digit for next time
-    }
-    
-
-    
+    }    
 }
